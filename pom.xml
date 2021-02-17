@@ -14,7 +14,10 @@
     <name>manager</name>
     <description>Projeto de Bookstore</description>
     <properties>
-        <java.version>14</java.version>
+        <sonar.projectKey>murilonerdx_bookstore-manager</sonar.projectKey>
+        <sonar.organization>murilonerdx</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -29,6 +32,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
