@@ -1,16 +1,19 @@
-package com.bookstore.manager.users.entity;
+package com.bookstore.manager.model.user.entity;
 
-import com.bookstore.manager.books.entity.Book;
-import com.bookstore.manager.users.enums.Gender;
+import com.bookstore.manager.entity.Auditable;
+import com.bookstore.manager.model.books.entity.Book;
+import com.bookstore.manager.model.user.enums.Gender;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class User {
+public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
