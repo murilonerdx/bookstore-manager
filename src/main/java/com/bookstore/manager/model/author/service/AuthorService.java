@@ -10,11 +10,6 @@ public class AuthorService {
     private final static AuthorMapper authorMapper = AuthorMapper.INSTANCE;
 
     @Autowired
-    private final AuthorRepository repository;
-
-    public AuthorService(AuthorRepository repository) {
-        this.repository = repository;
-    }
-
+    private AuthorRepository repository;
 
 }
