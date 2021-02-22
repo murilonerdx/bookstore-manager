@@ -1,4 +1,4 @@
-package com.bookstore.manager.model.author.service.controller;
+package com.bookstore.manager.model.author.controller;
 
 import io.swagger.annotations.Api;
 

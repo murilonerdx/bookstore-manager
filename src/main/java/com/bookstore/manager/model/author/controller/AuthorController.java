@@ -1,4 +1,4 @@
-package com.bookstore.manager.model.author.service.controller;
+package com.bookstore.manager.model.author.controller;
 
 import com.bookstore.manager.model.author.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
