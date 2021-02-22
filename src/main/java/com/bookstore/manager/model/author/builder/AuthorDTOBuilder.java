@@ -5,6 +5,7 @@ import com.bookstore.manager.model.books.entity.Book;
 import lombok.Builder;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.List;
 
 @Builder
@@ -17,6 +18,6 @@ public class AuthorDTOBuilder {
     public final int age = 20;
 
     public AuthorDTO builderAuthorDTO(){
-        return new AuthorDTO(id, name, age, null);
+        return new AuthorDTO(id, name, age, Arrays.asList(new Book()));
     }
 }
