@@ -2,13 +2,10 @@ package com.bookstore.manager.model.author.service;
 
 import com.bookstore.manager.model.author.dto.AuthorDTO;
 import com.bookstore.manager.model.author.entity.Author;
-import com.bookstore.manager.model.author.exception.AuthorAlreadyExistsException;
 import com.bookstore.manager.model.author.exception.AuthorNotFoundException;
 import com.bookstore.manager.model.author.mapper.AuthorMapper;
 import com.bookstore.manager.model.author.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 

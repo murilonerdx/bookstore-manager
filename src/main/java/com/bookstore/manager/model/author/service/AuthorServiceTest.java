@@ -7,8 +7,6 @@ import com.bookstore.manager.model.author.exception.AuthorAlreadyExistsException
 import com.bookstore.manager.model.author.exception.AuthorNotFoundException;
 import com.bookstore.manager.model.author.mapper.AuthorMapper;
 import com.bookstore.manager.model.author.repository.AuthorRepository;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,11 +14,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
 import java.util.Optional;
 
 
