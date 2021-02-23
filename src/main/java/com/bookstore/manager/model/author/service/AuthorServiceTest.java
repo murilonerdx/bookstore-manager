@@ -4,6 +4,7 @@ import com.bookstore.manager.model.author.builder.AuthorDTOBuilder;
 import com.bookstore.manager.model.author.dto.AuthorDTO;
 import com.bookstore.manager.model.author.entity.Author;
 import com.bookstore.manager.model.author.exception.AuthorAlreadyExistsException;
+import com.bookstore.manager.model.author.exception.AuthorNotFoundException;
 import com.bookstore.manager.model.author.mapper.AuthorMapper;
 import com.bookstore.manager.model.author.repository.AuthorRepository;
 import org.junit.Assert;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.when;
@@ -89,6 +91,30 @@ public class AuthorServiceTest {
         when(authorRepository.findById(expectedAuthorToCreatedDTO.getId())).thenReturn(Optional.of(expectedCreatedAuthor));
 
         assertThrows(AuthorAlreadyExistsException.class, () -> authorService.create(expectedAuthorToCreatedDTO));
+    }
+
+    @Test
+    void whenValidIdIsGivenThenAnAuthorShouldBeReturned(){
+        AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
+        Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
+
+        when(authorRepository.findById(expectedAuthorToCreatedDTO.getId())).thenReturn(Optional.of(expectedCreatedAuthor));
+
+        AuthorDTO foundAuthorDTO = authorService.findById(expectedCreatedAuthor.getId());
+
+        assertThat(foundAuthorDTO, equalTo(expectedCreatedAuthor));
+
+    }
+
+    @Test
+    void whenInvalidIdIsGivenThenAnExceptionShouldBeThrown(){
+        AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
+
+        when(authorRepository.findById(expectedAuthorToCreatedDTO.getId())).thenReturn(Optional.empty());
+
+
+        assertThrows(AuthorNotFoundException.class, () ->authorService.findById(expectedAuthorToCreatedDTO.getId()));
+
     }
 
 
