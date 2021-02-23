@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    private static final String BASE_PACKAGE = "com.bookmanager.bookstoremanager";
+    private static final String BASE_PACKAGE = "com.bookstore.manager";
     private static final String API_TITLE = "Bookstore Manager Course";
     private static final String API_DESCRIPTION = "Bookstore Manager API Professional";
     private static final String API_VERSION = "1.0.0";

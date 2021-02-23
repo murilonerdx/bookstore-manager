@@ -4,6 +4,7 @@ import com.bookstore.manager.model.books.entity.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -22,7 +23,7 @@ public class AuthorDTO {
     @NotNull
     @NotEmpty
     @Size(max =255)
-    private String nome;
+    private String name;
 
 
     @NotNull
@@ -30,4 +31,5 @@ public class AuthorDTO {
     private int age;
 
     private List<Book> books;
+
 }

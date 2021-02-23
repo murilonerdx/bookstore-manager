@@ -5,9 +5,11 @@ import com.bookstore.manager.model.author.entity.Author;
 import com.bookstore.manager.model.publishers.entity.Publisher;
 import com.bookstore.manager.model.user.entity.User;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 public class Book extends Auditable {
@@ -35,4 +37,6 @@ public class Book extends Auditable {
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     private User user;
+
+
 }
