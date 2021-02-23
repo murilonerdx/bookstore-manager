@@ -6,52 +6,65 @@ import com.bookstore.manager.model.author.entity.Author;
 import com.bookstore.manager.model.author.exception.AuthorAlreadyExistsException;
 import com.bookstore.manager.model.author.mapper.AuthorMapper;
 import com.bookstore.manager.model.author.repository.AuthorRepository;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.test.web.servlet.MockMvc;
 
-import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Optional;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.when;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AuthorServiceTest {
     private final AuthorMapper authorMapper = AuthorMapper.INSTANCE;
+
 
     @Mock
     private AuthorRepository authorRepository;
     @InjectMocks
     private AuthorService authorService;
 
-    @Autowired
-    private SessionFactory usermanagementSessionFactory;
-    private Session session;
+    private MockMvc mockMvc;
 
     private AuthorDTOBuilder authorDTOBuilder;
 
+
     @BeforeEach
-    void seUp() {
-        AuthorDTOBuilder authorDTOBuilder = AuthorDTOBuilder.builder().build();
-        AuthorDTO expectedCreatedAuthor = authorDTOBuilder.builderAuthorDTO();
+    void setUp() {
+        authorDTOBuilder = AuthorDTOBuilder.builder().build();
+        Object[] controllers;
+        mockMvc = MockMvcBuilders.standaloneSetup(authorService)
+                .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+                .setViewResolvers((s, locale) -> new MappingJackson2JsonView())
+                .build();
     }
 
-    @PostConstruct
-    public void init() {
-        session = usermanagementSessionFactory.getCurrentSession();
-    }
+//    @BeforeEach
+//    public void seUp() {
+//        AuthorDTOBuilder authorDTOBuilder = AuthorDTOBuilder.builder().build();
+//        AuthorDTO expectedCreatedAuthor = authorDTOBuilder.builderAuthorDTO();
+//    }
 
     @Test
     void whenNewAuthorIsInformedThenItShouldBeCreated() {
@@ -61,11 +74,11 @@ public class AuthorServiceTest {
 
         //when
         when(authorRepository.save(expectedCreatedAuthor)).thenReturn(expectedCreatedAuthor);
-        when(authorRepository.findById(expectedAuthorToCreatedDTO.getName())).thenReturn(Optional.empty());
+        when(authorRepository.findById(expectedAuthorToCreatedDTO.getId())).thenReturn(Optional.empty());
         AuthorDTO createdAuthorDTO = authorService.create(expectedAuthorToCreatedDTO);
 
         //then
-        assertThat(createdAuthorDTO, is(equalTo(expectedAuthorToCreatedDTO)));
+        assertThat(createdAuthorDTO, equalTo(expectedAuthorToCreatedDTO));
     }
 
     @Test
@@ -73,10 +86,12 @@ public class AuthorServiceTest {
         AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
         Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
 
-        when(authorRepository.findById(expectedAuthorToCreatedDTO.getName())).thenReturn(Optional.of(expectedCreatedAuthor));
+        when(authorRepository.findById(expectedAuthorToCreatedDTO.getId())).thenReturn(Optional.of(expectedCreatedAuthor));
 
-        assertThrows(AuthorAlreadyExistsException.class, ()->authorService.create(expectedAuthorToCreatedDTO));
+        assertThrows(AuthorAlreadyExistsException.class, () -> authorService.create(expectedAuthorToCreatedDTO));
     }
+
+
 }
 
 

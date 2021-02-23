@@ -7,11 +7,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class Author extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

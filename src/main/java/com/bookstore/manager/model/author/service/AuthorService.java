@@ -16,16 +16,13 @@ public class AuthorService {
 
     private final AuthorMapper authorMapper = AuthorMapper.INSTANCE;
 
-    private final AuthorRepository repository;
-
     @Autowired
-    public AuthorService(AuthorRepository repository) {
-        this.repository = repository;
-    }
+    private AuthorRepository repository;
+
 
 
     public AuthorDTO create(AuthorDTO authorDTO){
-        repository.findById(authorDTO.getId()).ifPresent(author ->{throw new AuthorAlreadyExistsException(author.getName());});
+//        repository.findById(authorDTO.getId()).ifPresent(author ->{throw new AuthorAlreadyExistsException(author.getName());});
         Author authorToCreate = authorMapper.toModel(authorDTO);
         Author createdAuthor = repository.save(authorToCreate);
         return authorMapper.toDTO(createdAuthor);

@@ -22,18 +22,15 @@ public class AuthorDTOBuilder {
     @Builder.Default
     public final Long id = 1L;
     @Builder.Default
-    public final String name = "Murilo Pereira";
+    public final String name = "Roberto";
     @Builder.Default
-    public final int age = 20;
+    public final int age = 24;
 
 
 
-    @Bean
     public AuthorDTO builderAuthorDTO(){
-        List<Book> lista = new ArrayList<>();
-        Book book = new Book();
-        lista.add(book);
-        return new AuthorDTO(id, name, age, lista);
+        List<Book> list = new ArrayList<>();
+        return new AuthorDTO(id, name, age, list);
     }
 
 }
