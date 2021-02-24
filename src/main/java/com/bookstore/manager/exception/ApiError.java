@@ -6,6 +6,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -16,7 +17,6 @@ public class ApiError{
 
     private String status;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
     private LocalDate timestamp;
 
     private String message;

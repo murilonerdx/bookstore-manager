@@ -36,9 +36,9 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.util.Collections;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -73,7 +73,7 @@ public class AuthorControllerTest {
     }
 
     @Test
-    void whenPostIsCalledThenStatusCreatedShouldBeReturned() throws Exception {
+    void whenPostIsCalledThenStatusCreatedShouldBeReturned() throws Exception, AuthorAlreadyExistsException {
         AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
 
         Mockito.when(authorService.create(expectedAuthorToCreatedDTO))
@@ -90,7 +90,7 @@ public class AuthorControllerTest {
     }
 
     @Test
-    void whenPostIsCalledWithoutRequiredFieldThenBadRequestStatusShouldBeInformed() throws Exception {
+    void whenPostIsCalledWithoutRequiredFieldThenBadRequestStatusShouldBeInformed() throws Exception, AuthorAlreadyExistsException {
 
         AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
         expectedAuthorToCreatedDTO.setName(null);
@@ -129,6 +129,17 @@ public class AuthorControllerTest {
                 .andExpect(jsonPath("$[0].name", Is.is(expectedAuthorToCreatedDTO.getName())))
                 .andExpect(jsonPath("$[0].age", Is.is(expectedAuthorToCreatedDTO.getAge())));
 
+
+    }
+
+    @Test
+    void whenDeleteWithValidIdIsCalledThenNoContentShouldBeReturned() throws Exception {
+        AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
+
+        doNothing().when(authorService).delete(expectedAuthorToCreatedDTO.getId());
+
+        mockMvc.perform(delete(AUTHOR_API_URL_PATH + "/"+expectedAuthorToCreatedDTO.getId())
+        .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
 
     }
 }

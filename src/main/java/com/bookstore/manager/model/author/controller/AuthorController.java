@@ -1,48 +1,53 @@
 package com.bookstore.manager.model.author.controller;
 
-import com.bookstore.manager.exception.BookstoreExceptionHandler;
 import com.bookstore.manager.model.author.dto.AuthorDTO;
+import com.bookstore.manager.model.author.exception.AuthorAlreadyExistsException;
+import com.bookstore.manager.model.author.exception.AuthorNotFoundException;
 import com.bookstore.manager.model.author.service.AuthorService;
-import org.hibernate.cfg.beanvalidation.IntegrationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.management.RuntimeErrorException;
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/authors")
 public class AuthorController implements AuthorControllerDocs {
-    @Autowired
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
-    BookstoreExceptionHandler exceptionHandler = new BookstoreExceptionHandler();
+    @Autowired
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
+    }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public AuthorDTO create(@RequestBody @Valid AuthorDTO authorDTO) {
+    public AuthorDTO create(@RequestBody @Valid AuthorDTO authorDTO) throws AuthorAlreadyExistsException {
         try {
             return authorService.create(authorDTO);
-        } catch (EntityExistsException e) {
-            exceptionHandler.handlerEntityExistException(e);
+        } catch (DataIntegrityViolationException | EntityExistsException e) {
+            throw new AuthorAlreadyExistsException(authorDTO.getName());
         }
-        return null;
     }
 
     @GetMapping(value = "/{id}")
     public AuthorDTO findById(@PathVariable Long id) {
         return authorService.findById(id);
-
     }
 
     @GetMapping()
-    public List<AuthorDTO> findAll(){
+    public List<AuthorDTO> findAll() {
         return authorService.findByAll();
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        authorService.delete(id);
     }
 }

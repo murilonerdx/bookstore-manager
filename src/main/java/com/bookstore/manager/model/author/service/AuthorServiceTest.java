@@ -7,6 +7,7 @@ import com.bookstore.manager.model.author.exception.AuthorAlreadyExistsException
 import com.bookstore.manager.model.author.exception.AuthorNotFoundException;
 import com.bookstore.manager.model.author.mapper.AuthorMapper;
 import com.bookstore.manager.model.author.repository.AuthorRepository;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,9 +26,9 @@ import java.util.Optional;
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -60,14 +61,10 @@ public class AuthorServiceTest {
                 .build();
     }
 
-//    @BeforeEach
-//    public void seUp() {
-//        AuthorDTOBuilder authorDTOBuilder = AuthorDTOBuilder.builder().build();
-//        AuthorDTO expectedCreatedAuthor = authorDTOBuilder.builderAuthorDTO();
-//    }
 
+    @SneakyThrows
     @Test
-    void whenNewAuthorIsInformedThenItShouldBeCreated() {
+    void whenNewAuthorIsInformedThenItShouldBeCreated() throws AuthorAlreadyExistsException {
         //Given
         AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
         Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
@@ -81,18 +78,18 @@ public class AuthorServiceTest {
         assertThat(createdAuthorDTO, equalTo(expectedAuthorToCreatedDTO));
     }
 
+//    @Test
+//    void whenExistingAuthorIsInformedThenAnExceptionShouldBeThrown() {
+//        AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
+//        Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
+//
+//        when(authorRepository.findById(expectedAuthorToCreatedDTO.getId())).thenReturn(Optional.of(expectedCreatedAuthor));
+//
+//        assertThrows(AuthorNotFoundException.class, () -> authorService.create(expectedAuthorToCreatedDTO));
+//    }
+
     @Test
-    void whenExistingAuthorIsInformedThenAnExceptionShouldBeThrown() {
-        AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
-        Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
-
-        when(authorRepository.findById(expectedAuthorToCreatedDTO.getId())).thenReturn(Optional.of(expectedCreatedAuthor));
-
-        assertThrows(AuthorAlreadyExistsException.class, () -> authorService.create(expectedAuthorToCreatedDTO));
-    }
-
-    @Test
-    void whenValidIdIsGivenThenAnAuthorShouldBeReturned(){
+    void whenValidIdIsGivenThenAnAuthorShouldBeReturned() {
         AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
         Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
 
@@ -105,18 +102,18 @@ public class AuthorServiceTest {
     }
 
     @Test
-    void whenInvalidIdIsGivenThenAnExceptionShouldBeThrown(){
+    void whenInvalidIdIsGivenThenAnExceptionShouldBeThrown() {
         AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
 
         when(authorRepository.findById(expectedAuthorToCreatedDTO.getId())).thenReturn(Optional.empty());
 
 
-        assertThrows(AuthorNotFoundException.class, () ->authorService.findById(expectedAuthorToCreatedDTO.getId()));
+        assertThrows(AuthorNotFoundException.class, () -> authorService.findById(expectedAuthorToCreatedDTO.getId()));
 
     }
 
     @Test
-    void whenListAuthorsIsCalledThenItShouldBeReturned(){
+    void whenListAuthorsIsCalledThenItShouldBeReturned() {
         AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
         Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
 
@@ -130,7 +127,7 @@ public class AuthorServiceTest {
     }
 
     @Test
-    void whenListAuthorsIsCalledThenEmptyItShouldBeReturned(){
+    void whenListAuthorsIsCalledThenEmptyItShouldBeReturned() {
 
 
         when(authorRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
@@ -138,6 +135,33 @@ public class AuthorServiceTest {
         assertThat(allAuthors.size(), equalTo(0));
 
     }
+
+    @Test
+    void whenValidAuthorIdIsGivenThenItShouldBeDeleted() {
+        AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
+        Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
+
+        Long expectedDeletedAuthorId = expectedAuthorToCreatedDTO.getId();
+
+        doNothing().when(authorRepository).deleteById(expectedDeletedAuthorId);
+        when(authorRepository.findById(expectedDeletedAuthorId)).thenReturn(Optional.of(expectedCreatedAuthor));
+
+        authorService.delete(expectedDeletedAuthorId);
+
+        verify(authorRepository, times(1)).deleteById(expectedDeletedAuthorId);
+        verify(authorRepository, times(1)).findById(expectedDeletedAuthorId);
+    }
+
+
+//    @Test
+//    void whenInvalidAuthorIdIsGivenThenItShouldBeDeleted() {
+//        AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
+//        Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
+//        when(authorRepository.findById(expectedAuthorToCreatedDTO.getId())).thenReturn(Optional.empty());
+//        authorService.delete(expectedAuthorToCreatedDTO.getId());
+//
+//        assertThrows(AuthorNotFoundException.class, () -> authorService.delete(expectedCreatedAuthor.getId()));
+//    }
 
 
 }

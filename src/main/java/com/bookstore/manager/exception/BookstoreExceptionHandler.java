@@ -1,5 +1,7 @@
 package com.bookstore.manager.exception;
 
+import com.bookstore.manager.model.author.exception.AuthorAlreadyExistsException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -32,11 +35,13 @@ public class BookstoreExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         return ResponseEntity.status(httpStatus).body(apiError);
     }
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handlerEntityNotFoundException(EntityNotFoundException exception){
         return buildResponseEntity(HttpStatus.NOT_FOUND, exception.getMessage(), Collections.singletonList(exception.getMessage()));
     }
-    @ExceptionHandler(EntityExistsException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AuthorAlreadyExistsException.class)
     public ResponseEntity<Object> handlerEntityExistException(EntityExistsException exception){
         return buildResponseEntity(HttpStatus.BAD_REQUEST, exception.getMessage(), Collections.singletonList(exception.getMessage()));
     }
