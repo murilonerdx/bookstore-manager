@@ -10,13 +10,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api("Authors management")
 public interface AuthorControllerDocs {
-    @ApiOperation(value="Author creation operation")
+    @ApiOperation(value="Author insert")
     @ApiResponses(value={ @ApiResponse(code = 201, message = "Success author duration"),@ApiResponse(code=400, message = "Missing required fileds, wrong field range value or author already exists")})
     AuthorDTO create(@RequestBody @Valid AuthorDTO authorDTO);
     @ApiOperation(value="Author findById")
     @ApiResponses(value={ @ApiResponse(code = 201, message = "Success author duration"),@ApiResponse(code=400, message = "Missing required fileds, wrong field range value or author already exists")})
     AuthorDTO findById(@PathVariable Long id);
+    @ApiOperation(value="Authors findAll")
+    @ApiResponses(value={ @ApiResponse(code = 201, message = "Success author duration"),@ApiResponse(code=400, message = "Not found element")})
+    List<AuthorDTO> findAll();
 }

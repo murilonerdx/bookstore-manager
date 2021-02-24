@@ -14,6 +14,7 @@ import javax.management.RuntimeErrorException;
 import javax.persistence.EntityExistsException;
 import javax.validation.Valid;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/authors")
@@ -38,5 +39,10 @@ public class AuthorController implements AuthorControllerDocs {
     public AuthorDTO findById(@PathVariable Long id) {
         return authorService.findById(id);
 
+    }
+
+    @GetMapping()
+    public List<AuthorDTO> findAll(){
+        return authorService.findByAll();
     }
 }

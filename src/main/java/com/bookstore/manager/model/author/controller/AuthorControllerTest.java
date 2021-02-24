@@ -34,7 +34,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 
+import java.util.Collections;
+
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -110,5 +113,22 @@ public class AuthorControllerTest {
         }catch(Exception e){
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    void whenGetListIsCalledThenStatusOkShouldBeReturned() throws Exception {
+        AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
+
+        when(authorService.findByAll()).thenReturn(Collections.singletonList(expectedAuthorToCreatedDTO));
+
+
+        mockMvc.perform(get(AUTHOR_API_URL_PATH).contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(expectedAuthorToCreatedDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", Is.is(expectedAuthorToCreatedDTO.getId().intValue())))
+                .andExpect(jsonPath("$[0].name", Is.is(expectedAuthorToCreatedDTO.getName())))
+                .andExpect(jsonPath("$[0].age", Is.is(expectedAuthorToCreatedDTO.getAge())));
+
+
     }
 }
