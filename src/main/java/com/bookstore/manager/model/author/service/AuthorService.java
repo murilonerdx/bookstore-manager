@@ -8,6 +8,9 @@ import com.bookstore.manager.model.author.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class AuthorService {
@@ -29,6 +32,11 @@ public class AuthorService {
     public AuthorDTO findById(Long id){
         Author foundAuthor = repository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
         return authorMapper.toDTO(foundAuthor);
+    }
+
+    public List<AuthorDTO> findByAll(){
+        return repository.findAll()
+                .stream().map(authorMapper::toDTO).collect(Collectors.toList());
     }
 
 

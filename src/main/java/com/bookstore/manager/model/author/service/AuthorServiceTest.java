@@ -17,6 +17,8 @@ import org.mockito.quality.Strictness;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -110,6 +112,30 @@ public class AuthorServiceTest {
 
 
         assertThrows(AuthorNotFoundException.class, () ->authorService.findById(expectedAuthorToCreatedDTO.getId()));
+
+    }
+
+    @Test
+    void whenListAuthorsIsCalledThenItShouldBeReturned(){
+        AuthorDTO expectedAuthorToCreatedDTO = authorDTOBuilder.builderAuthorDTO();
+        Author expectedCreatedAuthor = authorMapper.toModel(expectedAuthorToCreatedDTO);
+
+        when(authorRepository.findAll()).thenReturn(Collections.singletonList(expectedCreatedAuthor));
+        List<AuthorDTO> allAuthors = authorService.findByAll();
+
+
+        assertThat(allAuthors.size(), equalTo(1));
+        assertThat(allAuthors.get(0), equalTo(expectedAuthorToCreatedDTO));
+
+    }
+
+    @Test
+    void whenListAuthorsIsCalledThenEmptyItShouldBeReturned(){
+
+
+        when(authorRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
+        List<AuthorDTO> allAuthors = authorService.findByAll();
+        assertThat(allAuthors.size(), equalTo(0));
 
     }
 
