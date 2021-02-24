@@ -100,7 +100,7 @@ public class AuthorServiceTest {
 
         AuthorDTO foundAuthorDTO = authorService.findById(expectedCreatedAuthor.getId());
 
-        assertThat(foundAuthorDTO, equalTo(expectedCreatedAuthor));
+        assertThat(foundAuthorDTO, equalTo(expectedAuthorToCreatedDTO));
 
     }
 
