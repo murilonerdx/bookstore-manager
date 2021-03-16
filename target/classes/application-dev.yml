@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:bookstore_dev;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driveClassName: org.h2.Driver
+    username: sa
+    password: 12345
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+
+logging:
+  level:
+    br:
+      com:
+        bookmanager: DEBUG
