@@ -8,9 +8,9 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface PublisherMapper {
 
-    PublisherMapper INSTANCE = Mappers.getMapper(PublisherMapper.class);
+  PublisherMapper INSTANCE = Mappers.getMapper(PublisherMapper.class);
 
-    Publisher toModel(PublisherDTO publisherDTO);
+  Publisher toModel(PublisherDTO publisherDTO);
 
-    PublisherDTO toDTO(Publisher publisher);
+  PublisherDTO toDTO(Publisher publisher);
 }

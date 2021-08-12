@@ -8,9 +8,9 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface UserMapper {
 
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+  UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    User toModel(UserDTO userDTO);
+  User toModel(UserDTO userDTO);
 
-    UserDTO toDTO(User user);
+  UserDTO toDTO(User user);
 }
