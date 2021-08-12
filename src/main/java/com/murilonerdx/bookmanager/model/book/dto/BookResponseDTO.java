@@ -11,17 +11,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookResponseDTO {
 
-    private Long id;
+  private Long id;
 
-    private String name;
+  private String name;
 
-    private String isbn;
+  private String isbn;
 
-    private PublisherDTO publisher;
+  private PublisherDTO publisher;
 
-    private AuthorDTO author;
+  private AuthorDTO author;
 
-    private Integer pages;
+  private Integer pages;
 
-    private Integer chapters;
+  private Integer chapters;
 }
