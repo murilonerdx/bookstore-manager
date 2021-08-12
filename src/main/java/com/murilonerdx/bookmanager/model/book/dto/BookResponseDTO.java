@@ -2,8 +2,6 @@ package com.murilonerdx.bookmanager.model.book.dto;
 
 import com.murilonerdx.bookmanager.model.author.dto.AuthorDTO;
 import com.murilonerdx.bookmanager.model.publisher.dto.PublisherDTO;
-import com.rodrigopeleias.bookstoremanager.authors.dto.AuthorDTO;
-import com.rodrigopeleias.bookstoremanager.publishers.dto.PublisherDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
