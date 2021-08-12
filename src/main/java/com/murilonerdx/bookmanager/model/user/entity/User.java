@@ -1,5 +1,6 @@
 package com.murilonerdx.bookmanager.model.user.entity;
 
+import com.murilonerdx.bookmanager.model.auditable.Auditable;
 import com.murilonerdx.bookmanager.model.book.entity.Book;
 import com.murilonerdx.bookmanager.model.user.enums.Gender;
 import com.murilonerdx.bookmanager.model.user.enums.Role;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class User {
+public class User extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

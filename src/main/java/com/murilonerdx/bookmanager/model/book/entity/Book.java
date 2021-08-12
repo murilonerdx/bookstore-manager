@@ -1,5 +1,6 @@
 package com.murilonerdx.bookmanager.model.book.entity;
 
+import com.murilonerdx.bookmanager.model.auditable.Auditable;
 import com.murilonerdx.bookmanager.model.author.entity.Author;
 import com.murilonerdx.bookmanager.model.publisher.entity.Publisher;
 import com.murilonerdx.bookmanager.model.user.entity.User;
@@ -15,7 +16,7 @@ import javax.persistence.ManyToOne;
 
 @Data
 @Entity
-public class Book {
+public class Book extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

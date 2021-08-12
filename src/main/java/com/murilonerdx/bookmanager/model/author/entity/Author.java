@@ -1,5 +1,6 @@
 package com.murilonerdx.bookmanager.model.author.entity;
 
+import com.murilonerdx.bookmanager.model.auditable.Auditable;
 import com.murilonerdx.bookmanager.model.book.entity.Book;
 import lombok.Data;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Author {
+public class Author extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
