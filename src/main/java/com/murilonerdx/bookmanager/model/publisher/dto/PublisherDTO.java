@@ -18,12 +18,10 @@ public class PublisherDTO {
     private Long id;
 
     @NotNull
-    @NotEmpty
     @Size(max = 255)
     private String name;
 
     @NotNull
-    @NotEmpty
     @Size(max = 50)
     private String code;
 
