@@ -15,33 +15,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired private UserRepository userRepository;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+  @Autowired private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtTokenManager jwtTokenManager;
+  @Autowired private JwtTokenManager jwtTokenManager;
 
-    public JwtResponse createAuthenticationToken(JwtRequest jwtRequest) {
-        authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
+  public JwtResponse createAuthenticationToken(JwtRequest jwtRequest) {
+    authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
 
-        UserDetails userDetails = this.loadUserByUsername(jwtRequest.getUsername());
-        String token = jwtTokenManager.generateToken(userDetails);
+    UserDetails userDetails = this.loadUserByUsername(jwtRequest.getUsername());
+    String token = jwtTokenManager.generateToken(userDetails);
 
-        return JwtResponse.builder().jwtToken(token).build();
-    }
+    return JwtResponse.builder().jwtToken(token).build();
+  }
 
-    private void authenticate(String username, String password) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-    }
+  private void authenticate(String username, String password) {
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(username, password));
+  }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User not found with username: %s", username)));
+  @Override
+  public UserDetails loadUserByUsername(String username) {
+    User user = userRepository.findByUsername(username).orElseThrow(
+        ()
+            -> new UsernameNotFoundException(
+                String.format("User not found with username: %s", username)));
 
-        return new AuthenticatedUser(user.getUsername(), user.getPassword(), user.getRole().getDescription());
-    }
+    return new AuthenticatedUser(user.getUsername(), user.getPassword(),
+                                 user.getRole().getDescription());
+  }
 }
