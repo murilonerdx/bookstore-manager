@@ -16,6 +16,10 @@ spring:
 
 logging:
   level:
-    com:
-      murilonerdx:
-        bookmanager: DEBUG
+    br:
+      com:
+        rodrigopeleias: DEBUG
+
+jwt:
+  secret: bookstoremanager
+  validity: 18000
