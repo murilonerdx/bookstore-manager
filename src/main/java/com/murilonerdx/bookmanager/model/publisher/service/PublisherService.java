@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PublisherService {
 
-  private final static PublisherMapper publisherMapper = PublisherMapper.INSTANCE;
+  private final static PublisherMapper publisherMapper =
+      PublisherMapper.INSTANCE;
 
   private final PublisherRepository publisherRepository;
 
@@ -30,20 +31,20 @@ public class PublisherService {
 
   public List<PublisherDTO> findAll() {
     return publisherRepository.findAll()
-            .stream()
-            .map(publisherMapper::toDTO)
-            .collect(Collectors.toList());
+        .stream()
+        .map(publisherMapper::toDTO)
+        .collect(Collectors.toList());
   }
 
   public PublisherDTO findById(Long id) {
     return publisherRepository.findById(id)
-            .map(publisherMapper::toDTO)
-            .orElseThrow(() -> new PublisherNotFoundException(id));
+        .map(publisherMapper::toDTO)
+        .orElseThrow(() -> new PublisherNotFoundException(id));
   }
 
   public Publisher verifyAndGetIfExists(Long id) {
-    return publisherRepository.findById(id)
-            .orElseThrow(() -> new PublisherNotFoundException(id));
+    return publisherRepository.findById(id).orElseThrow(
+        () -> new PublisherNotFoundException(id));
   }
 
   public void delete(Long id) {
@@ -52,7 +53,8 @@ public class PublisherService {
   }
 
   private void verifyIfExists(String name, String code) {
-    Optional<Publisher> duplicatedPublisher = publisherRepository.findByNameOrCode(name, code);
+    Optional<Publisher> duplicatedPublisher =
+        publisherRepository.findByNameOrCode(name, code);
     if (duplicatedPublisher.isPresent()) {
       throw new PublisherAlreadyExistsException(name, code);
     }
