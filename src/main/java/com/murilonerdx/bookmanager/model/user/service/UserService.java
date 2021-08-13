@@ -42,17 +42,4 @@ public class UserService {
         }
     }
 
-    private MessageDTO creationMessage(User createdUser) {
-        return returnMessage("created", createdUser);
-    }
-
-    private MessageDTO updateMessage(User updatedUser) {
-        return returnMessage("updated", updatedUser);
-    }
-
-    private MessageDTO returnMessage(String action, User user) {
-        return MessageDTO.builder()
-                .message(String.format("Username %s with ID %s successfully %s", user.getUsername(), user.getId(), action))
-                .build();
-    }
 }
