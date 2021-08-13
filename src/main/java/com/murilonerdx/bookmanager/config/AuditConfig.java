@@ -1,6 +1,5 @@
 package com.murilonerdx.bookmanager.config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -12,8 +11,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class AuditConfig {
 
-    @Bean
-    public AuditorAware<String> auditorProvider() {
-        return new BookstoreAuditorAware();
-    }
+  @Bean
+  public AuditorAware<String> auditorProvider() {
+    return new BookstoreAuditorAware();
+  }
 }
