@@ -15,7 +15,6 @@ public class AuthorDTO {
     private Long id;
 
     @NotNull
-    @NotEmpty
     @Size(max = 255)
     private String name;
 
