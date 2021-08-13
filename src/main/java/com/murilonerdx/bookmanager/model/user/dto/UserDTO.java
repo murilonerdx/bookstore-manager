@@ -23,7 +23,6 @@ public class UserDTO {
     private Long id;
 
     @NotNull
-    @NotEmpty
     @Size(max = 255)
     private String name;
 
@@ -36,16 +35,12 @@ public class UserDTO {
     private Gender gender;
 
     @NotNull
-    @NotEmpty
-    @Email
     private String email;
 
     @NotNull
-    @NotEmpty
     private String username;
 
     @NotNull
-    @NotEmpty
     private String password;
 
     @NotNull
