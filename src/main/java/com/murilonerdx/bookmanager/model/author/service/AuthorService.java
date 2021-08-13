@@ -20,6 +20,8 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
+
+
     public AuthorDTO create(AuthorDTO authorDTO) {
         Author authorToCreate = authorMapper.toModel(authorDTO);
         Author createdAuthor = authorRepository.save(authorToCreate);
@@ -39,7 +41,7 @@ public class AuthorService {
     }
 
     public void delete(Long id) {
+        verifyAndGetIfExists(id);
         authorRepository.deleteById(id);
     }
-
 }

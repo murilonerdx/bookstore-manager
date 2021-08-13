@@ -1,6 +1,6 @@
 package com.murilonerdx.bookmanager.model.author.entity;
 
-import com.murilonerdx.bookmanager.model.auditable.Auditable;
+import com.murilonerdx.bookmanager.auditable.Auditable;
 import com.murilonerdx.bookmanager.model.book.entity.Book;
 import lombok.Data;
 

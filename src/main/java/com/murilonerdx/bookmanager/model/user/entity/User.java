@@ -1,6 +1,6 @@
 package com.murilonerdx.bookmanager.model.user.entity;
 
-import com.murilonerdx.bookmanager.model.auditable.Auditable;
+import com.murilonerdx.bookmanager.auditable.Auditable;
 import com.murilonerdx.bookmanager.model.book.entity.Book;
 import com.murilonerdx.bookmanager.model.user.enums.Gender;
 import com.murilonerdx.bookmanager.model.user.enums.Role;
@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.List;

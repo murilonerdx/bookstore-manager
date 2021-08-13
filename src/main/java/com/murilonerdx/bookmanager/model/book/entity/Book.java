@@ -1,6 +1,6 @@
 package com.murilonerdx.bookmanager.model.book.entity;
 
-import com.murilonerdx.bookmanager.model.auditable.Auditable;
+import com.murilonerdx.bookmanager.auditable.Auditable;
 import com.murilonerdx.bookmanager.model.author.entity.Author;
 import com.murilonerdx.bookmanager.model.publisher.entity.Publisher;
 import com.murilonerdx.bookmanager.model.user.entity.User;

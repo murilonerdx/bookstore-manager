@@ -1,4 +1,4 @@
-package com.murilonerdx.bookmanager.model.auditable;
+package com.murilonerdx.bookmanager.auditable;
 
 import lombok.Getter;
 import lombok.Setter;
