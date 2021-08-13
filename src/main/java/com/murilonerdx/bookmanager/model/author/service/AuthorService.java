@@ -2,6 +2,7 @@ package com.murilonerdx.bookmanager.model.author.service;
 
 import com.murilonerdx.bookmanager.model.author.dto.AuthorDTO;
 import com.murilonerdx.bookmanager.model.author.entity.Author;
+import com.murilonerdx.bookmanager.model.author.exception.AuthorAlreadyExistsException;
 import com.murilonerdx.bookmanager.model.author.exception.AuthorNotFoundException;
 import com.murilonerdx.bookmanager.model.author.mapper.AuthorMapper;
 import com.murilonerdx.bookmanager.model.author.repository.AuthorRepository;
@@ -20,9 +21,16 @@ public class AuthorService {
   private final AuthorRepository authorRepository;
 
   public AuthorDTO create(AuthorDTO authorDTO) {
+    verifyIfExists(authorDTO.getName());
     Author authorToCreate = authorMapper.toModel(authorDTO);
     Author createdAuthor = authorRepository.save(authorToCreate);
     return authorMapper.toDTO(createdAuthor);
+  }
+
+  public AuthorDTO findByName(String name) {
+    Author foundAuthor = authorRepository.findByName(name).orElseThrow(
+        () -> new AuthorNotFoundException(name));
+    return authorMapper.toDTO(foundAuthor);
   }
 
   public List<AuthorDTO> findAll() {
@@ -40,5 +48,11 @@ public class AuthorService {
   public void delete(Long id) {
     verifyAndGetIfExists(id);
     authorRepository.deleteById(id);
+  }
+
+  private void verifyIfExists(String authorName) {
+    authorRepository.findByName(authorName).ifPresent(author -> {
+      throw new AuthorAlreadyExistsException(authorName);
+    });
   }
 }
