@@ -18,12 +18,10 @@ public class BookRequestDTO {
     private Long id;
 
     @NotNull
-    @NotEmpty
     @Size(max = 255)
     private String name;
 
     @NotNull
-    @ISBN
     private String isbn;
 
     @NotNull
