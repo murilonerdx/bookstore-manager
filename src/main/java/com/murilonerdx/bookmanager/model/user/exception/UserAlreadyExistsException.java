@@ -1,4 +1,4 @@
-package com.murilonerdx.bookmanager.model.user.exceptions;
+package com.murilonerdx.bookmanager.model.user.exception;
 
 import javax.persistence.EntityExistsException;
 
