@@ -13,7 +13,7 @@ import com.murilonerdx.bookmanager.model.user.dto.MessageDTO;
 import com.murilonerdx.bookmanager.model.user.dto.UserDTO;
 import com.murilonerdx.bookmanager.model.user.entity.User;
 import com.murilonerdx.bookmanager.model.user.exception.UserNotFoundException;
-import com.murilonerdx.bookmanager.model.user.exceptions.UserAlreadyExistsException;
+import com.murilonerdx.bookmanager.model.user.exception.UserAlreadyExistsException;
 import com.murilonerdx.bookmanager.model.user.mapper.UserMapper;
 import com.murilonerdx.bookmanager.model.user.repository.UserRepository;
 import com.murilonerdx.bookmanager.model.user.service.UserService;
