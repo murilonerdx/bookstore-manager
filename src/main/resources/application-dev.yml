@@ -13,12 +13,11 @@ spring:
   h2:
     console:
       enabled: true
-
 logging:
   level:
-    br:
-      com:
-        rodrigopeleias: DEBUG
+    com:
+      murilonerdx:
+        bookmanager: DEBUG
 
 jwt:
   secret: bookstoremanager
