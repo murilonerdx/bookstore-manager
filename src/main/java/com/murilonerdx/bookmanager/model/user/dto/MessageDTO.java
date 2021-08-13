@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MessageDTO {
 
-    private String message;
+  private String message;
 }

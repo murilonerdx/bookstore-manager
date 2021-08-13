@@ -28,21 +28,21 @@ public class AuthorService {
   }
 
   public AuthorDTO findByName(String name) {
-    Author foundAuthor = authorRepository.findByName(name)
-            .orElseThrow(() -> new AuthorNotFoundException(name));
+    Author foundAuthor = authorRepository.findByName(name).orElseThrow(
+        () -> new AuthorNotFoundException(name));
     return authorMapper.toDTO(foundAuthor);
   }
 
   public List<AuthorDTO> findAll() {
     return authorRepository.findAll()
-            .stream()
-            .map(authorMapper::toDTO)
-            .collect(Collectors.toList());
+        .stream()
+        .map(authorMapper::toDTO)
+        .collect(Collectors.toList());
   }
 
   public Author verifyAndGetIfExists(Long id) {
-    return authorRepository.findById(id)
-            .orElseThrow(() -> new AuthorNotFoundException(id));
+    return authorRepository.findById(id).orElseThrow(
+        () -> new AuthorNotFoundException(id));
   }
 
   public void delete(Long id) {
@@ -51,9 +51,8 @@ public class AuthorService {
   }
 
   private void verifyIfExists(String authorName) {
-    authorRepository.findByName(authorName)
-            .ifPresent(author -> {
-              throw new AuthorAlreadyExistsException(authorName);
-            });
+    authorRepository.findByName(authorName).ifPresent(author -> {
+      throw new AuthorAlreadyExistsException(authorName);
+    });
   }
 }
